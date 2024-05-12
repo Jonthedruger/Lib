@@ -1,34 +1,57 @@
 local UI = {}
 
--- Define the tab class, window class, and other UI components...
+-- Define Window Class
+local Window = {}
+Window.__index = Window
 
--- Define the key system
-local KeySystem = {}
-KeySystem.__index = KeySystem
-
-function KeySystem.new()
-    local self = setmetatable({}, KeySystem)
-    self.currentKey = ""
-    self.discordGuild = nil
-    self.keyChannel = nil -- Add a field to store the channel for sending key messages
+function Window.new(name)
+    local self = setmetatable({}, Window)
+    self.Name = name
+    self.Tabs = {}
     return self
 end
 
-function KeySystem:setKey(newKey)
-    self.currentKey = newKey
-    if self.keyChannel then
-        self:keyChannelMessage("New key set: " .. newKey) -- Send message to the key channel
-    end
+function Window:AddTab(name)
+    local tab = Tab.new(name)
+    table.insert(self.Tabs, tab)
+    return tab
 end
 
--- Function to send a message to the key channel
-function KeySystem:keyChannelMessage(message)
-    if self.keyChannel then
-        self.keyChannel:send(message)
-    end
+-- Define Tab Class
+local Tab = {}
+Tab.__index = Tab
+
+function Tab.new(name)
+    local self = setmetatable({}, Tab)
+    self.Name = name
+    self.UIElements = {}
+    return self
 end
 
--- Export the classes
-UI.KeySystem = KeySystem
+function Tab:AddSlider(name, minValue, maxValue, callback)
+    local slider = Instance.new("TextButton")
+    -- Customize slider properties (e.g., size, position, appearance)
+    slider.Text = name
+    slider.MouseButton1Click:Connect(callback) -- Execute callback when clicked
+    -- Add slider to GUI or game world
+    table.insert(self.UIElements, slider)
+    return slider
+end
+
+function Tab:AddButton(name, callback)
+    local button = Instance.new("TextButton")
+    -- Customize button properties (e.g., size, position, appearance)
+    button.Text = name
+    button.MouseButton1Click:Connect(callback) -- Execute callback when clicked
+    -- Add button to GUI or game world
+    table.insert(self.UIElements, button)
+    return button
+end
+
+-- Define UI Library Functions
+function UI:AddWindow(name)
+    local window = Window.new(name)
+    return window
+end
 
 return UI
