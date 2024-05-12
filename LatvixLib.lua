@@ -1,11 +1,13 @@
+
+-- UI Library
+
+local UI = {}
+
 local Orientation = {
     Vertical = "Vertical",
     Horizontal = "Horizontal"
 }
 
--- UI Library
-
-local UI = {}
 
 -- Window Class
 UI.Window = {}
