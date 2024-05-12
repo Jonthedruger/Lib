@@ -1,3 +1,8 @@
+local Orientation = {
+    Vertical = "Vertical",
+    Horizontal = "Horizontal"
+}
+
 -- UI Library
 
 local UI = {}
@@ -163,7 +168,7 @@ function UI.Separator.new(thickness, length, orientation)
     local self = {}
     self.thickness = thickness or 2
     self.length = length or 100
-    self.orientation = orientation or Enum.Orientation.Vertical
+    self.orientation = orientation or Orientation.Vertical
     self.color = Color3.fromRGB(200, 200, 200)
 
     return self
